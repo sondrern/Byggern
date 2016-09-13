@@ -99,9 +99,9 @@ void SRAM_test(void)
 	printf("SRAM test completed with \n%4d errors in write phase and \n%4d errors in retrieval phase\n\n", write_errors, retrieval_errors);
 }
 
-uint8_t adc_read(int ch){
+uint8_t adc_read(int mux){
 	volatile char *ext_adc = (char *) 0x1400;
-	*ext_adc = ch;
+	*ext_adc = mux;
 	while(PINB & (1<<PINB3)){}
 	return *ext_adc;
 }
@@ -166,6 +166,7 @@ int main(void){
    
 
    for(;;){    // Repeat indefinitely
+	   
 		  printf("Joystick button = %i \n", (PINB & (1<<PINB0)));
 		  printf("Right button = %i \n", !(PINB & (1<<PINB1)));
 		  printf("LEft button = %i \n", !(PINB & (1<<PINB2)));
@@ -178,6 +179,8 @@ int main(void){
 		printf("slider right = %i \n ", adc_read(7));
 	    printf("\n");
 		
+		//SRAM_test();
+		printf("\n");
 		
 	 _delay_ms(1000*1);               
    }
