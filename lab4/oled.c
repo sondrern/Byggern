@@ -7,6 +7,10 @@
 
 static FontDescr font = font4x6(void);
 
+
+static uint8_t page     = 0;
+static uint8_t column = 0;
+
 void oled_cmd(char c){
     *ext_oled_cmd = c;
 }
