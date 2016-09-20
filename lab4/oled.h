@@ -88,15 +88,6 @@ volatile char *ext_oled_data = (char *) 0x1200;
 
 
 
-
-typedef struct {
-    void*   addr;
-    uint8_t width;
-    uint8_t height;
-    uint8_t start_offset;
-
-} FontDescr;
-
 void oled_init(void);
 
 void oled_cmd(char c);

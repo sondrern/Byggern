@@ -5,7 +5,7 @@
 #include "oled.h"
 #include "font.h"
 
-static FontDescr font = font4x6(void);
+
 
 
 static uint8_t page     = 0;
@@ -76,7 +76,7 @@ void oled_go_to_page(uint8_t p){
 
 void oled_go_to_column(uint8_t c){
     column = c;
-    uint8_t x = column * font.width;
+    uint8_t x = column * font_width;
     oled_write_cmd(OLED_PMODE_COLUMN_ADDRESS_LOWER + (x & 0x0f));
     oled_write_cmd(OLED_PMODE_COLUMN_ADDRESS_UPPER + ((x & 0xf0) >> 4));
 }
@@ -84,16 +84,19 @@ void oled_go_to_column(uint8_t c){
 
 
 void oled_write_char(char c){
+	int j = c;
+	j=j-font_offset;
     if(c == '\n'){
-        for(uint8_t i = column*font.width; i < DISP_WIDTH; i++){
+        for(uint8_t i = column*font_width; i < DISP_WIDTH; i++){
             oled_write_data(0);
         }
         page = (page + 1) % DISP_PAGES;
         oled_go_to_page(page);
         oled_go_to_column(0);
     } else {
-        for (uint8_t i = 0; i < font.width; i++){
-            oled_write_data(pgm_read_byte( font.addr + (c-font.start_offset)*font.width + i ));
+        for (uint8_t i = 0; i < font_width; i++){
+            oled_write_data(pgm_read_byte( &font[j][i] ));
+            //oled_write_data(pgm_read_byte( *font_addr + i ));
         }
         column++;
     }
