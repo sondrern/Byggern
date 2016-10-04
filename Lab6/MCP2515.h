@@ -9,7 +9,8 @@
 #define MCP_RTS_ALL		0x87
 
 
-
+#define MCP_CANCTRL     0x0F
+#define MCP_BITMOD      0x05
 
 
 uint8_t mcp2515_read(uint8_t addr);
