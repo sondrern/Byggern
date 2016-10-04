@@ -3,9 +3,9 @@
 
 
 struct data {
-	uint8_t id;
+	unsigned int id;
 	uint8_t length;
-	char data;
+	uint8_t data[8];
 };
 
 
