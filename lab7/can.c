@@ -18,8 +18,8 @@ void can_init(){
 		return 1;
 	}
 		mcp2515_bit_modify(MCP_RXB0CTRL, 0b01100000, 0b01100000);
-		mcp2515_bit_modify(MCP_CANCTRL, 0xE0, MODE_LOOPBACK);
-		
+		//mcp2515_bit_modify(MCP_CANCTRL, 0xE0, MODE_LOOPBACK); 
+		mcp2515_bit_modify(MCP_CANCTRL, 0xE0, MODE_NORMAL);
 		
 	
 	return 0;
