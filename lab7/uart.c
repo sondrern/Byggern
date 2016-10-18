@@ -1,5 +1,5 @@
 #include "uart.h"
-#define F_CPU 4915200UL
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <avr/io.h>
@@ -8,9 +8,17 @@
 
 
 // Define baud rate
-#define USART_BAUDRATE 38400
-#define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
+#define atmega162
 
+#ifdef atmega162
+	#define F_CPU 4915200UL
+	#define USART_BAUDRATE 38400
+	#define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
+#else
+	#define F_CPU 1843200UL
+	#define USART_BAUDRATE 38400
+	#define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
+#endif
 
 
 void USART_SendByte(uint8_t u8Data){
@@ -30,10 +38,16 @@ uint8_t USART_ReceiveByte(){
 }
 
 void USART_Init(void){
-	
+	#ifdef atmega162
 	UBRR0L = BAUD_PRESCALE;
 	UBRR0H = (BAUD_PRESCALE >> 8);
 	UCSR0B = ((1<<TXEN0)|(1<<RXEN0) );
+	#else
+	UBRRL = BAUD_PRESCALE;
+	UBRRH = (BAUD_PRESCALE >> 8);
+	UCSRB = ((1<<TXEN0)|(1<<RXEN0) );
+	UCSRC = ((1<<USBS) | (UCSZ0));
+	#endif
 	fdevopen(&USART_SendByte, &USART_ReceiveByte);
 }
 
