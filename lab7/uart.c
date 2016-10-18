@@ -43,10 +43,10 @@ void USART_Init(void){
 	UBRR0H = (BAUD_PRESCALE >> 8);
 	UCSR0B = ((1<<TXEN0)|(1<<RXEN0) );
 	#else
-	UBRRL = BAUD_PRESCALE;
-	UBRRH = (BAUD_PRESCALE >> 8);
-	UCSRB = ((1<<TXEN0)|(1<<RXEN0) );
-	UCSRC = ((1<<USBS) | (UCSZ0));
+	UBRR0L = BAUD_PRESCALE;
+	UBRR0H = (BAUD_PRESCALE >> 8);
+	UCSR0B = ((1<<TXEN0)|(1<<RXEN0) );
+	UCSR0C = ((1<<USBS0) | (UCSZ0));
 	#endif
 	fdevopen(&USART_SendByte, &USART_ReceiveByte);
 }
