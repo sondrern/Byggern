@@ -75,6 +75,15 @@ static void transfer(int fd)
 		printf("Received back from BLE");
 		fprintf(fp,"4");
 	}
+
+	else if(rx[0]==5){
+ 		printf("Goal");
+		fprintf(fp,"5");
+	}
+	else if(rx[0]==6){
+		printf("A received");
+		fprintf(fp,"6");
+	}
 	
 	fclose(fp);
 	puts("");
